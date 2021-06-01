@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".screens.ListFragment">
+    <data>
+        <variable
+            name="listViewModel"
+            type="com.example.speechrecognizerexample_2.screens.ListViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/record_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            tools:listitem="@layout/list_item_record" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
