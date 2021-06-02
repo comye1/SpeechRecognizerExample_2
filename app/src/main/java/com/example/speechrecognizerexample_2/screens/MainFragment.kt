@@ -50,6 +50,10 @@ class MainFragment : Fragment() {
 
         binding.mainViewModel = mainViewModel
 
+        if(!speechText.isNullOrEmpty()){
+            binding.textView.text = speechText
+        }
+
         binding.imageView.setOnClickListener {
             checkAudioPermission()
             startSpeechToText()
@@ -66,6 +70,11 @@ class MainFragment : Fragment() {
                 val record = Record(speechText)
                 mainViewModel.onSaveButtonClicked(record)
             }
+            clearText()
+        }
+
+        binding.buttonClear.setOnClickListener {
+            clearText()
         }
 
         mainViewModel.navigateToList.observe(viewLifecycleOwner, Observer {
@@ -81,6 +90,11 @@ class MainFragment : Fragment() {
             }
         })
         return binding.root
+    }
+
+    private fun clearText() {
+        speechText = ""
+        binding.textView.text = "Output Text"
     }
 
     private fun navigateToList() {
@@ -123,11 +137,12 @@ class MainFragment : Fragment() {
                 val result = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 if (result != null) {
                     // result[0] will give the output of speech
-                    if(!speechText.isNullOrEmpty()) {
-                        speechText += result[0] + ".\n"
-                    }else{
-                        speechText = result[0]
-                    }
+//                    if(!speechText.isNullOrEmpty()) {
+//                        speechText += ".\n"+ result[0]
+//                    }else{
+//                        speechText = result[0]
+//                    }
+                    speechText += result[0] + ".\n"
                     binding.textView.text = speechText
                 }
             }
