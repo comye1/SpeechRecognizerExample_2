@@ -1,4 +1,4 @@
-package com.example.speechrecognizerexample_2.screens
+package com.example.speechrecognizerexample_2.screens.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

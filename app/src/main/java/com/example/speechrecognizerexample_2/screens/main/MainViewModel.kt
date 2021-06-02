@@ -1,4 +1,4 @@
-package com.example.speechrecognizerexample_2.screens
+package com.example.speechrecognizerexample_2.screens.main
 
 import android.app.Application
 import androidx.lifecycle.LiveData

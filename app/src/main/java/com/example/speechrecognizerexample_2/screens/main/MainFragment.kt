@@ -1,4 +1,4 @@
-package com.example.speechrecognizerexample_2.screens
+package com.example.speechrecognizerexample_2.screens.main
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -21,10 +21,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.speechrecognizerexample_2.R
 import com.example.speechrecognizerexample_2.data.Record
-import com.example.speechrecognizerexample_2.data.RecordDao
 import com.example.speechrecognizerexample_2.data.RecordDatabase
 import com.example.speechrecognizerexample_2.databinding.FragmentMainBinding
-import com.google.android.material.snackbar.Snackbar
 
 class MainFragment : Fragment() {
 
@@ -87,6 +85,7 @@ class MainFragment : Fragment() {
         mainViewModel.onRecordSaved.observe(viewLifecycleOwner, Observer {
             if(it){
                 Toast.makeText(requireContext(), "저장되었습니다.", Toast.LENGTH_LONG).show()
+                mainViewModel.doneShowingSavedMessage()
             }
         })
         return binding.root

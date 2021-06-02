@@ -1,4 +1,4 @@
-package com.example.speechrecognizerexample_2.screens
+package com.example.speechrecognizerexample_2.screens.list
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,9 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.speechrecognizerexample_2.R
-import com.example.speechrecognizerexample_2.data.RecordDao
 import com.example.speechrecognizerexample_2.data.RecordDatabase
 import com.example.speechrecognizerexample_2.databinding.FragmentListBinding
+import com.example.speechrecognizerexample_2.screens.RecordsAdapter
 
 class ListFragment : Fragment() {
 
