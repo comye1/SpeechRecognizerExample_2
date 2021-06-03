@@ -27,7 +27,8 @@ import com.example.speechrecognizerexample_2.databinding.FragmentMainBinding
 class MainFragment : Fragment() {
 
     private lateinit var binding : FragmentMainBinding
-    private var speechText = ""
+    private lateinit var mainViewModel : MainViewModel
+//    private var speechText = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,15 +43,19 @@ class MainFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val dao = RecordDatabase.getInstance(application).recordDao
         val viewModelFactory = MainViewModelFactory(dao)
-        val mainViewModel = ViewModelProvider(
+        mainViewModel = ViewModelProvider(
             this, viewModelFactory).get(MainViewModel::class.java)
 
 
         binding.mainViewModel = mainViewModel
 
-        if(!speechText.isNullOrEmpty()){
-            binding.textView.text = speechText
-        }
+//        if(!speechText.isNullOrEmpty()){
+//            binding.textView.text = speechText
+//        }
+//
+//        if(!mainViewModel.speechText.value.isNullOrEmpty()){
+//            binding.textView.text = mainViewModel.speechText.value
+//        }
 
         binding.imageView.setOnClickListener {
             checkAudioPermission()
@@ -62,18 +67,29 @@ class MainFragment : Fragment() {
         }
 
         binding.buttonSave.setOnClickListener {
-            //validation
-            if(!speechText.isNullOrBlank()){
-                //save text
-                val record = Record(speechText)
-                mainViewModel.onSaveButtonClicked(record)
-            }
-            clearText()
+            //validation -> viewModel
+//            if(!speechText.isNullOrBlank()){
+//                //save text
+//                val record = Record(speechText)
+//                mainViewModel.onSaveButtonClicked(record)
+//            }
+//            clearText()
+            mainViewModel.onSaveButtonClicked()
+//            mainViewModel.clearSpeechText()
         }
 
         binding.buttonClear.setOnClickListener {
-            clearText()
+//            clearText()
+            mainViewModel.clearSpeechText()
         }
+
+        mainViewModel.speechText.observe(viewLifecycleOwner, Observer {
+            if(!it.isNullOrEmpty()){
+                binding.textView.text = it
+            }else {
+                binding.textView.text = "Output Text"
+            }
+        })
 
         mainViewModel.navigateToList.observe(viewLifecycleOwner, Observer {
             if(it){
@@ -91,10 +107,10 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-    private fun clearText() {
-        speechText = ""
-        binding.textView.text = "Output Text"
-    }
+//    private fun clearText() {
+//        speechText = ""
+//        binding.textView.text = "Output Text"
+//    }
 
     private fun navigateToList() {
         findNavController().navigate(R.id.action_mainFragment_to_listFragment)
@@ -141,8 +157,10 @@ class MainFragment : Fragment() {
 //                    }else{
 //                        speechText = result[0]
 //                    }
-                    speechText += result[0] + ".\n"
-                    binding.textView.text = speechText
+                    mainViewModel.setSpeechText(result[0] + ".\n")
+//                    speechText += result[0] + ".\n"
+
+//                    binding.textView.text = speechText
                 }
             }
             override fun onPartialResults(bundle: Bundle) {}

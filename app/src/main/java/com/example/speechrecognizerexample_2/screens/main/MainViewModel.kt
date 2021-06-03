@@ -21,6 +21,23 @@ class MainViewModel(dao : RecordDao) : ViewModel() {
     val onRecordSaved : LiveData<Boolean>
         get() = _onRecordSaved
 
+
+    private val _speechText = MutableLiveData<String>()
+    val speechText : LiveData<String>
+        get() = _speechText
+
+    fun setSpeechText(text: String){
+        if(speechText.value.isNullOrEmpty()) {
+            _speechText.value = text
+        }else{
+            _speechText.value += text
+        }
+    }
+
+    fun clearSpeechText(){
+        _speechText.value = null
+    }
+
     fun doneNavigating(){
         _navigateToList.value = false
     }
@@ -29,10 +46,17 @@ class MainViewModel(dao : RecordDao) : ViewModel() {
         _onRecordSaved.value = false
     }
 
-    fun onSaveButtonClicked(record : Record){
+    fun onSaveButtonClicked(){
+        if(!speechText.value.isNullOrEmpty()){
+            val record = Record(speechText.value!!)
+            createRecord(record)
+        }
+        clearSpeechText()
+    }
+
+    private fun createRecord(record : Record){
         viewModelScope.launch {
             recordDao.insert(record)
-
             _onRecordSaved.value = true
         }
     }
