@@ -20,13 +20,13 @@
             android:layout_height="wrap_content"
             android:text="Output Text"
             android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@id/imageView"
+            app:layout_constraintBottom_toTopOf="@id/imageButton"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView"
+        <ImageButton
+            android:id="@+id/imageButton"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginBottom="32dp"

@@ -57,7 +57,7 @@ class MainFragment : Fragment() {
 //            binding.textView.text = mainViewModel.speechText.value
 //        }
 
-        binding.imageView.setOnClickListener {
+        binding.imageButton.setOnClickListener {
             checkAudioPermission()
             startSpeechToText()
         }
@@ -138,13 +138,13 @@ class MainFragment : Fragment() {
 
         speechRecognizer.setRecognitionListener(object : RecognitionListener {
             override fun onReadyForSpeech(bundle: Bundle?) {
-                binding.imageView.setImageResource(R.drawable.ic_baseline_mic_96)
+                binding.imageButton.setImageResource(R.drawable.ic_baseline_mic_96)
             }
             override fun onBeginningOfSpeech() {}
             override fun onRmsChanged(v: Float) {}
             override fun onBufferReceived(bytes: ByteArray?) {}
             override fun onEndOfSpeech() {
-                binding.imageView.setImageResource(R.drawable.ic_baseline_mic_none_96)
+                binding.imageButton.setImageResource(R.drawable.ic_baseline_mic_none_96)
             }
             override fun onError(i: Int) {}
 
