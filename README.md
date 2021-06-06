@@ -36,3 +36,38 @@ interface RecordDao {
     suspend fun insert(record : Record) // insert(record)를 호출하면 된다.
 }
 ```
+## Database
+abstract database holder class : 데이터베이스를 담게 된다.
+Room이 이 추상 클래스를 구현한다.
+데이터베이스 인스턴스를 생성하거나 / 이미 생성된 경우 이를 반환하는 메소드를 가진다. -> getInstance()
+앱 전체에서 하나의 Room database 인스턴스만 갖도록 하기 위해 싱글톤으로 만든다.
+### data / RecordDatabase.kt
+```
+@Database(entities = [Record::class], version = 1)
+abstract class RecordDatabase : RoomDatabase() {
+    abstract val recordDao : RecordDao // DAO 클래스를 내부에 가진다.
+
+    companion object{ // 추상 메소드 또는 추상 프로퍼티를 정의한다.
+        @Volatile // 캐시되지 않음 -> 항상 최신 상태로 유지된다.
+        private var INSTANCE : RecordDatabase? = null // 데이터베이스 참조를 저장한다.
+
+        fun getInstance(context: Context) : RecordDatabase {
+            synchronized(this){
+                var instance = INSTANCE 
+
+                if(instance == null){ 
+                    // 데이터베이스 참조를 가져온다.
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        RecordDatabase::class.java,
+                        "speech_record_database"
+                    ).fallbackToDestructiveMigration()
+                        .build()
+                    INSTANCE = instance
+                }
+                return instance
+            }
+        }
+    }
+}
+```
