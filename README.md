@@ -37,10 +37,10 @@ interface RecordDao {
 }
 ```
 ## Database
-abstract database holder class : 데이터베이스를 담게 된다.
-Room이 이 추상 클래스를 구현한다.
-데이터베이스 인스턴스를 생성하거나 / 이미 생성된 경우 이를 반환하는 메소드를 가진다. -> getInstance()
-앱 전체에서 하나의 Room database 인스턴스만 갖도록 하기 위해 싱글톤으로 만든다.
+abstract database holder class : 데이터베이스를 담게 된다. 
+Room이 이 추상 클래스를 구현한다.  
+데이터베이스 인스턴스를 생성하거나 / 이미 생성된 경우 이를 반환하는 메소드를 가진다. -> getInstance() 
+앱 전체에서 하나의 Room database 인스턴스만 갖도록 하기 위해 싱글톤으로 만든다. 
 ### data / RecordDatabase.kt
 ```
 @Database(entities = [Record::class], version = 1)
@@ -71,3 +71,27 @@ abstract class RecordDatabase : RoomDatabase() {
     }
 }
 ```
+# UI Controller & ViewModel
+## MainActivity.kt 
+NavHostFragment가 네비게이션 그래프(화면의 이동을 정의) 대로 프래그먼트를 보여준다.
+액션바를 설정하고 Up 버튼 ( <- 모양) 이 네비게이션에 따라 동작하도록 한다.
+
+## MainFragment.kt
+제일 먼저 보이는 프래그먼트이다. 
+UI의 업데이트를 담당하여, 클릭 등의 이벤트를 수신한다.
+뷰모델의 LiveData를 observe하여 데이터가 변경될 때 바로 필요한 UI 동작을 수행한다.
+오디오 권한 확인과 SpeechRecognizer의 생성, 실행을 담당한다.
+
+## MainViewModel.kt
+뷰(UI)와 관련된 데이터를 관리한다. 프래그먼트에서 변화를 즉각적으로 알 수 있도록 LiveData<T> 타입의 값을 사용한다.
+- 음성 인식 결과로 텍스트뷰에 표시되는 speechText (LiveData<String>)
+- ListFragment로 이동할 지 여부를 나타내는 navigateToList (LiveData<Boolean>)
+- 기록이 저장되면 토스트 메시지를 보여주기 위한 onRecordSaved (LiveData<Boolean>)
+이 있고, 이 LiveData 값을 바꾸는 함수들이 있다.
+    
+    
+**데이터베이스 연산을 뷰모델에서 호출한다.**
+- 뷰모델 생성 시 생성자로 dao를 전달받아 viewModelScope에서 dao의 함수를 호출한다.
+
+## ListFragment.kt
+## ListViewModel.kt
