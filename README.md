@@ -3,7 +3,8 @@
 
 # RoomDatabase
 ## Entity 
-데이터베이스 테이블에 들어갈 엔티티를 표현하는 데이터 클래스
+데이터베이스 테이블에 들어갈 엔티티를 표현하는 데이터 클래스 
+
 클래스의 멤버는 엔티티의 속성(attribute)를 표현한다.
 ### data / Record.kt
 ```
@@ -94,4 +95,12 @@ UI의 업데이트를 담당하여, 클릭 등의 이벤트를 수신한다.
 - 뷰모델 생성 시 생성자로 dao를 전달받아 viewModelScope에서 dao의 함수를 호출한다.
 
 ## ListFragment.kt
+MainActivity에서 List 버튼을 누르면 여기로 이동한다.
+    
+리스트(리사이클러뷰) - RecordsAdapter, LinearLayoutManager
+
+ListViewModel의 records를 observe하여 변경될 때 adapter에 바로 전달 
+    
 ## ListViewModel.kt
+
+RecordDao 인스턴스를 갖고 있으면서 getRecords를 호출해 records를 보관함
