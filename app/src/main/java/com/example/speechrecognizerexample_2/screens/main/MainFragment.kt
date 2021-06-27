@@ -28,7 +28,6 @@ class MainFragment : Fragment() {
 
     private lateinit var binding : FragmentMainBinding
     private lateinit var mainViewModel : MainViewModel
-//    private var speechText = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,14 +48,6 @@ class MainFragment : Fragment() {
 
         binding.mainViewModel = mainViewModel
 
-//        if(!speechText.isNullOrEmpty()){
-//            binding.textView.text = speechText
-//        }
-//
-//        if(!mainViewModel.speechText.value.isNullOrEmpty()){
-//            binding.textView.text = mainViewModel.speechText.value
-//        }
-
         binding.imageButton.setOnClickListener {
             checkAudioPermission()
             startSpeechToText()
@@ -67,15 +58,7 @@ class MainFragment : Fragment() {
         }
 
         binding.buttonSave.setOnClickListener {
-            //validation -> viewModel
-//            if(!speechText.isNullOrBlank()){
-//                //save text
-//                val record = Record(speechText)
-//                mainViewModel.onSaveButtonClicked(record)
-//            }
-//            clearText()
             mainViewModel.onSaveButtonClicked()
-//            mainViewModel.clearSpeechText()
         }
 
         binding.buttonClear.setOnClickListener {
@@ -106,11 +89,6 @@ class MainFragment : Fragment() {
         })
         return binding.root
     }
-
-//    private fun clearText() {
-//        speechText = ""
-//        binding.textView.text = "Output Text"
-//    }
 
     private fun navigateToList() {
         findNavController().navigate(R.id.action_mainFragment_to_listFragment)
@@ -151,16 +129,7 @@ class MainFragment : Fragment() {
             override fun onResults(bundle: Bundle) {
                 val result = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 if (result != null) {
-                    // result[0] will give the output of speech
-//                    if(!speechText.isNullOrEmpty()) {
-//                        speechText += ".\n"+ result[0]
-//                    }else{
-//                        speechText = result[0]
-//                    }
                     mainViewModel.setSpeechText(result[0] + ".\n")
-//                    speechText += result[0] + ".\n"
-
-//                    binding.textView.text = speechText
                 }
             }
             override fun onPartialResults(bundle: Bundle) {}
