@@ -1,10 +1,7 @@
 package com.example.speechrecognizerexample_2.data
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface RecordDao {
@@ -14,4 +11,13 @@ interface RecordDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(record : Record)
+
+    @Update
+    suspend fun update(record: Record)
+
+    @Delete
+    suspend fun delete(record: Record)
+
+    @Query("DELETE FROM record_table")
+    suspend fun clear()
 }
