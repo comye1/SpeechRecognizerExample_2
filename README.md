@@ -7,7 +7,7 @@
 
 클래스의 멤버는 엔티티의 속성(attribute)를 표현한다.
 ### data / Record.kt
-```
+```kotlin
 @Entity(tableName = "record_table") // Record는 "record_table" 테이블을 구성하는 엔티티 
 data class Record (
     val speech: String, // speech 속성
@@ -26,7 +26,7 @@ Insert, Update, Delete는 어노테이션만으로 쿼리가 생성되며,
 직접 Query 문을 작성할 수도 있다.
 
 ### data / RecordDao.kt
-```
+```kotlin
 @Dao
 interface RecordDao {
 
@@ -43,7 +43,7 @@ Room이 이 추상 클래스를 구현한다.
 데이터베이스 인스턴스를 생성하거나 / 이미 생성된 경우 이를 반환하는 메소드를 가진다. -> getInstance() 
 앱 전체에서 하나의 Room database 인스턴스만 갖도록 하기 위해 싱글톤으로 만든다. 
 ### data / RecordDatabase.kt
-```
+```kotlin
 @Database(entities = [Record::class], version = 1)
 abstract class RecordDatabase : RoomDatabase() {
     abstract val recordDao : RecordDao // DAO 클래스를 내부에 가진다.
