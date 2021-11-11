@@ -7,6 +7,10 @@
         <variable
             name="record"
             type="com.example.speechrecognizerexample_2.data.Record" />
+
+        <variable
+            name="delete"
+            type="com.example.speechrecognizerexample_2.screens.RecordListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,6 +58,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="16dp" />
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="delete"
+            android:onClick="@{() -> delete.onClick(record)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

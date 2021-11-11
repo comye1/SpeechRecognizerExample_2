@@ -10,8 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.speechrecognizerexample_2.R
+import com.example.speechrecognizerexample_2.data.Record
 import com.example.speechrecognizerexample_2.data.RecordDatabase
 import com.example.speechrecognizerexample_2.databinding.FragmentListBinding
+import com.example.speechrecognizerexample_2.screens.RecordListener
 import com.example.speechrecognizerexample_2.screens.RecordsAdapter
 
 class ListFragment : Fragment() {
@@ -31,7 +33,12 @@ class ListFragment : Fragment() {
         val listViewModel = ViewModelProvider(this, viewModelFactory).get(ListViewModel::class.java)
         binding.lifecycleOwner = this
 
-        val adapter = RecordsAdapter()
+
+        fun onDeleteButton(record: Record) {
+            listViewModel.deleteRecord(record)
+        }
+
+        val adapter = RecordsAdapter(RecordListener { onDeleteButton(it) })
         binding.recordList.adapter = adapter
 
         listViewModel.records.observe(viewLifecycleOwner, Observer {

@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.speechrecognizerexample_2.data.Record
 import com.example.speechrecognizerexample_2.databinding.ListItemRecordBinding
 
-class RecordsAdapter : ListAdapter<Record, RecordsAdapter.ViewHolder> (RecordDiffCallback()) {
+class RecordsAdapter(val delete:RecordListener) : ListAdapter<Record, RecordsAdapter.ViewHolder> (RecordDiffCallback()) {
 
     class ViewHolder(val binding : ListItemRecordBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Record) {
+        fun bind(item: Record, delete: RecordListener) {
             binding.record = item
+            binding.delete = delete
             binding.executePendingBindings()
         }
         companion object{
@@ -30,7 +31,7 @@ class RecordsAdapter : ListAdapter<Record, RecordsAdapter.ViewHolder> (RecordDif
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, delete)
     }
 
 }
@@ -43,4 +44,8 @@ class RecordDiffCallback : DiffUtil.ItemCallback<Record>() {
     override fun areContentsTheSame(oldItem: Record, newItem: Record): Boolean {
         return oldItem == newItem
     }
+}
+
+class RecordListener(val clickListener: (record:Record) -> Unit) {
+    fun onClick(record: Record) = clickListener(record)
 }
